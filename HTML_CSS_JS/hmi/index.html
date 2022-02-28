@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>
+        KKY/PP Semestralka
+    </title>
+    <!-- CSS -->
+    <link rel="stylesheet" type="text/css" href="css/styles.css">
+    <!-- JS -->
+    <script type="text/javascript" src="js/rexhmi-vendor.min.js?version=2.50.10-12359"></script>
+    <script type="text/javascript" src="js/rexhmi.min.js?version=2.50.10-12359"></script>
+    <script type="text/javascript" src="js/main.js"></script>
+</head>
+
+<body>
+    <header id="header">
+        <h1>Vizualizace - míč na špulce</h1>
+    </header>
+    <main id="content">
+
+        <!--
+        Fi1_ - Aktuální natočení špulky [rad]
+
+        dFi1_ - Aktuální rychlost špulky [rad/s]
+
+        Fi2_ - Aktuální poloha středu míče vzhledem ke středu špulky [rad]
+
+        dFi2_ - Aktuální rychlost "padání" míče (pohyb středu míče vzhledem ke středu špulky) [rad/s]
+        -->
+        <div class="row">
+        <div class="column">
+        <svg id="svgcanvas" xmlns="http://www.w3.org/2000/svg" version="1.1" style="width:700px; height: 800px; margin: 0 auto;">
+            <!--
+            <circle id= "nic" cx="350" cy="230" r="180" stroke-size="1px" stroke="black" fill="none" />
+            -->
+            <defs>
+                <linearGradient id="myGradient" gradientTransform="rotate(90)">
+                  <stop offset="45%"  stop-color="gold" />
+                  <stop offset="80%" stop-color="red" />
+                </linearGradient>
+            </defs>
+	        <circle id= "ball" cx="350" cy="140" r="120" style="fill:url('#myGradient');stroke-width:1;stroke:rgb(74, 77, 74)" />
+            <!-- <polygon points="350,70 370,120 330,120" style="fill:lime;"/>-->
+            <polygon id= "stand" points="200,420 160,800 540,800 500,420" style="fill:rgb(129, 129, 121);stroke-width:1;stroke:rgb(74, 77, 74)" />
+            <polyline points="350,420 520,300 560,240" style="fill:none;stroke-width:40;stroke:rgb(129, 129, 121)"/>
+            <polyline points="350,420 180,300 140,240" style="fill:none;stroke-width:40;stroke:rgb(129, 129, 121)"/>
+	        <circle cx="560" cy="240" r="22" style="fill:rgb(129, 129, 121);stroke-width:1;stroke:rgb(74, 77, 74)" />
+	        <circle cx="140" cy="240" r="22" style="fill:rgb(129, 129, 121);stroke-width:1;stroke:rgb(74, 77, 74)" />
+	        <circle id= "spool" cx="350" cy="420" r="160" style="fill:rgb(29, 31, 29);stroke-width:1;stroke:rgb(74, 77, 74)" />
+            <polygon id="arrow" points="350,300 390,520 310,520" style="fill:rgb(193, 197, 193);stroke-width:1;stroke:rgb(74, 77, 74)"/>
+            <circle id= "screw" cx="350" cy="420" r="5" style="fill:rgb(29, 31, 29);stroke-width:1;stroke:rgb(29, 31, 29)" />
+
+           
+            Sorry, your browser does not support inline SVG.
+        </svg>
+    </div>
+
+    
+    <div class="column">
+        <p class="tableLabel">Hodnoty simulace:</p>
+        <table class="table">
+            <tr>
+                <td class="col1">Odchylka míče od středu: </td>
+                <td class="col2"><dict id="Fi2">0</dict></td>
+                <td> °</td>
+            </tr>
+            <tr>
+                <td class="col1">Úhel natočení špulky: </td>
+                <td class="col2"><dict id="Fi1">0</dict></td>
+                <td> °</td>
+            </tr>
+            <tr>
+                <td class="col1">Rychlost otáčení špulky: </td>
+                <td class="col2"><dict id="dFi1">0</dict></td>
+                <td> °/s</td>
+            </tr>
+        
+        </table>
+        <br> <br>
+        <p class="tableLabel">Ovládání simulace:</p>
+        <table class="table">
+            <tr>
+                <td class="col1">Síla šťouchnutí:     </td>
+                <td  class="col3">
+                    <select name="nudgeGain" id="nudges">
+                        <option value="-0.1">SLABĚ - CW</option>
+                        <option value="-0.25">SILNĚ - CW</option>
+                        <option value="0.1">SLABĚ - CCW</option>
+                        <option value="0.25">SILNĚ - CCW</option>
+                    </select>
+                </td>
+                <td> <button class="button" onclick="nudgeInput()" >Šťouchnutí do míče</button> </td>
+            </tr>
+            <tr>
+                <td class="col1">Počáteční odchylka míče:     </td>
+                <td class="col3">
+                    <input type="number" id="y0" name="y0" value="0" step="0.1" min="-20" max="20">
+                </td>
+                <td>
+                    <button class="button" onclick="resetInput()">Reset</button>
+                </td>
+            </tr>
+            <tr>
+                <td>Velikost náhodné poruchy:     </td>
+                <td class="col3">
+                    <input type="range" id="intensity" name="intst" value="1" min="0" max="3">
+                </td>
+                <td class="col3">
+                    <p id="intStr">NÍZKÁ</p>
+                </td>
+            </tr>
+            
+        </table>
+    </div>
+    </div>
+    </main>
+</body>
+
+</html>
